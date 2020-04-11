@@ -91,14 +91,14 @@ Page({
       data: {
         start: this.data.playlist.length,
         count: MAX_LIMIT,
-        // $url: 'playlist',
+        $url: 'playlist',//加载tcb-router后
       }
     }).then((res) => {
       console.log(res)
       this.setData({
         playlist: this.data.playlist.concat(res.result.data)
       })
-      wx.stopPullDownRefresh()
+      wx.stopPullDownRefresh() //当数据请求完之后停止下拉刷新这个操作
       wx.hideLoading()
     })
   },
