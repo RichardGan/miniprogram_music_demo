@@ -1,4 +1,5 @@
 // components/musiclist/musiclist.js
+const app = getApp()
 Component({
   /**
    * 组件的属性列表
@@ -14,6 +15,14 @@ Component({
   data: {
     playingId: -1
   },
+  pageLifetimes: {
+    show() {
+      this.setData({
+        playingId: parseInt(app.getPlayMusicId())
+      })
+
+    }
+  },
 
   /**
    * 组件的方法列表
@@ -22,12 +31,13 @@ Component({
     onSelect(event){
       //target 是真正的事件源，currentTarget是绑定事件的元素
       // console.log(event.currentTarget.dataset.musicid)
-      const musicid = event.currentTarget.dataset.musicid
+      const ds = event.currentTarget.dataset
+      const musicid = ds.musicid
       this.setData({
         playingId: musicid
       })
       wx.navigateTo({
-        url: `../../pages/player/player?musicid=${musicid}`
+        url: `../../pages/player/player?musicId=${musicid}&index=${ds.index}`
       })
     }
   }

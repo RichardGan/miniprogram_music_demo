@@ -6,16 +6,14 @@ Page({
    */
   data: {
     musiclist: [],
-    listInfo: {}
+    listInfo: {},
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  //点击歌单跳转过来的options
-  onLoad: function (options) {
+  onLoad: function(options) {
     console.log(options)
-    //还要调用云函数,指定name为music下面的musiclist
     wx.showLoading({
       title: '加载中',
     })
@@ -25,66 +23,24 @@ Page({
         playlistId: options.playlistId,
         $url: 'musiclist'
       }
-    }).then((res)=>{
+    }).then((res) => {
       console.log(res)
       const pl = res.result.playlist
       this.setData({
         musiclist: pl.tracks,
         listInfo: {
           coverImgUrl: pl.coverImgUrl,
-          name: pl.name
+          name: pl.name,
         }
       })
+      this._setMusiclist()
       wx.hideLoading()
     })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  _setMusiclist() {
+    wx.setStorageSync('musiclist', this.data.musiclist)
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
 
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
